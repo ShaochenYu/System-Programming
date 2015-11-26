@@ -5,7 +5,7 @@
 **********************************
 
 1.	configure ip address and port number in makefile under 
-	project1_ShaochenYu directory.
+	parent directory.
 	 
 	you will see such content in makefile:
 	
@@ -35,25 +35,25 @@
 	change the ip address (10.241.45.228) to your local host,
 	and change the port number (10000) to your like.
 	
-2.	In terminal, go to project1_ShaochenYu directory where you can find
+2.	In terminal, go to parent directory where you can find
 	makefile, run "make", this will generate the whole .class you need to use.
 	
 	For TCP:(please run server before run client)
 	
-3.	In terminal, go to project1_ShaochenYu directory, run "make runtcpserver"
+3.	In terminal, go to parent directory, run "make runtcpserver"
 	you will start the tcp server.
 	
-4.  In a different terminal with that in Step 3, go to project1_ShaochenYu directory, run "make runtcpclient"
+4.  In a different terminal with that in Step 3, go to parent directory, run "make runtcpclient"
 	you will start the tcp client.
 
 5	In step 3's terminal, use control + C to shut down the tcp server.
 	
 	For UDP:(please run server before run client)
 	
-6. 	In terminal, go to project1_ShaochenYu directory, run "make runudpserver"
+6. 	In terminal, go to parent directory, run "make runudpserver"
 	you will start the udp server.
 
-7.	In a different terminal with that in Step 6, go to project1_ShaochenYu directory, run "make runudpclient"
+7.	In a different terminal with that in Step 6, go to parent directory, run "make runudpclient"
 	you will start the udp client.
 
 8.	In step 6's terminal, use control + C to shut down the udp server.
@@ -64,7 +64,7 @@
 
 *****************************************
 
-The running results have been stored in log files in project1_ShaochenYu directory.
+The running results have been stored in log files in parent directory.
 The following shows where are the applications' log.
 
 tcp server log ------ tcpServerLogger
