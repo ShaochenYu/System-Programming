@@ -84,6 +84,19 @@ public class KeyValueServerInterfaceClient
 		return ;		
 	}
 	
+	public static void doRequest(String in_data) throws RemoteException{
+		String res = server.requestHandler(in_data,local_ip);
+		
+		String operation = in_data.substring(0,Math.min(in_data.length(),3));
+		
+		if( in_data.length() >= 3 && operation.equals("GET") ){
+		
+			if( res.length() == 0 )	
+				loghelper.record("	[WARNING]	Invalid Key For GET Operation!" );
+			else
+				loghelper.record("	[MESSAGE]	Receive Data For GET Operation:	" + res);
 	
+		}
+	}
 
 }
