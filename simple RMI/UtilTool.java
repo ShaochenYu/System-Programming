@@ -43,6 +43,18 @@ class  UtilTool
 						}
 			}
 			
+			case "DEL":{
+						if(data.length < 2){
+							loghelper.record("	[WARNING]	RECEIVED MALFORMED DELETE REQUEST FROM <" + ip + ">:<" + port_num + ">");
+							return null;
+						}else{
+							loghelper.record("	[MESSAGE]	RECEIVED DELETE REQUEST FROM <" + ip + ">:<" + port_num + ">");
+							hashmap.remove(data[1]);
+						}
+				
+						return null;
+						
+			}
 
 			
 			default:{	
