@@ -15,7 +15,17 @@ class  UtilTool
 		StringBuffer res = new StringBuffer();
 		
 		switch( data[0] ){
-			
+			case "PUT":{
+						if( data.length < 3 || data[1].length() == 0 || data[2].length() == 0){
+								loghelper.record("	[WARNING]	RECEIVED MALFORMED PUT REQUEST FROM <" + ip + ">:<" + port_num + ">");
+								return null;
+						}else{
+							hashmap.put(data[1],data[2]);
+							loghelper.record("	[MESSAGE]	RECEIVED PUT REQUEST FROM <" + ip + ">:<" + port_num + ">");
+							return null;
+						}
+						
+			}
 
 			
 			default:{	
