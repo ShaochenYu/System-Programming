@@ -13,7 +13,32 @@ class  LogHelper
 	
 	public LogHelper( String filename ){
 		
+		logger = Logger.getLogger("MyLog");
+		logger.setUseParentHandlers(false);
+		FileHandler fh;
+		
+		try {
 
+	        fh = new FileHandler(System.getProperty("user.dir") + "/" + filename);  
+	        // set formatter for log
+			fh.setFormatter(new Formatter(){
+				public String format( LogRecord rec ){
+					StringBuffer buf = new StringBuffer();
+					buf.append( df.format(new Date(rec.getMillis())) ).append("		");
+					buf.append( rec.getMessage() ).append("\n");
+					return buf.toString();
+				}
+				
+			}
+			);
+	
+			logger.addHandler(fh);
+			
+	    } catch (SecurityException e) {
+	        e.printStackTrace();  
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    }
 	
 	}
 	
