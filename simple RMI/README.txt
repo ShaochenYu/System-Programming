@@ -16,3 +16,15 @@
 	
 4. shut down
 
+
+*****************************************
+
+	WHERE TO CHECK THE RUNNING RESULT
+
+*****************************************
+
+The running results have been stored in log files in simple RMI/ directory.
+The following shows where are the applications' log.
+
+server log	---	RMIServerLogger
+client log	---	RMIClientLogger 
