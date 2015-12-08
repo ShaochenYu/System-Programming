@@ -1,0 +1,1 @@
+This application is for managing player rosters, CRUD(create, read, update and delete) operations are included in our application. 
