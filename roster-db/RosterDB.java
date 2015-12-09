@@ -269,7 +269,7 @@ public class RosterDB{
 			//String title = movie.getTitle();
 			//int year = movie.getYear();
 			
-			String sql = "update Players set " + columnName + " = ?  where player_id = ? ";
+			String sql = "update Players set " + columnName + " = ?  where player_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
 			try {
@@ -297,7 +297,7 @@ public class RosterDB{
 		
 			Teams team = list_teams.get(row);
 			
-			String sql = "update Teams set " + columnName + " = ?  where team_id = ? ";
+			String sql = "update Teams set " + columnName + " = ?  where team_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
 			try {
@@ -324,7 +324,7 @@ public class RosterDB{
 		
 			Leagues league = list_leagues.get(row);
 			
-			String sql = "update Leagues set " + columnName + " = ?  where league_id = ? ";
+			String sql = "update Leagues set " + columnName + " = ?  where league_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
 			try {
