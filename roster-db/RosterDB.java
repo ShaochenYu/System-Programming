@@ -137,13 +137,7 @@ public class RosterDB{
 		// search players
 		public List<Players> getPlayers(int id) {
 			List<Players> filterList = new ArrayList<Players>();
-			/*
-			try {
-				getPlayers();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			*/
+			
 			for (Players p : list_players) {
 				if ( p.player_id == id) {
 					filterList.add(p);
@@ -154,13 +148,7 @@ public class RosterDB{
 		// search teams
 		public List<Teams> getTeams(int id) {
 			List<Teams> filterList = new ArrayList<Teams>();
-			/*
-			try {
-				getTeams();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			*/
+			
 			for (Teams t : list_teams) {
 				if ( t.team_id == id) {
 					filterList.add(t);
@@ -171,13 +159,7 @@ public class RosterDB{
 		// search leagues
 		public List<Leagues> getLeagues(int id) {
 			List<Leagues> filterList = new ArrayList<Leagues>();
-			/*
-			try {
-				getLeagues();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			*/
+			
 			for (Leagues l : list_leagues) {
 				if ( l.league_id == id ) {
 					filterList.add(l);
@@ -188,91 +170,80 @@ public class RosterDB{
 		
 		// add Players
 		
-		public void addPlayers(Players player) {
-			String sql = "insert into Players values " + "(?, ?, ?, ?, ?); ";
-
-			PreparedStatement preparedStatement = null;
-			try {
-				preparedStatement = conn.prepareStatement(sql);
-				preparedStatement.setInt(1, player.player_id);
-				preparedStatement.setString(2, player.player_name);
-				preparedStatement.setString(3, player.height);
-				preparedStatement.setInt(4, player.weight);
-				preparedStatement.setInt(5, player.team_id);
-				preparedStatement.executeUpdate();
-				
-				//update list
-				getPlayers();
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-			}
+		public void addPlayers(Players player) throws SQLException {
 			
+			StringBuffer sb = new StringBuffer();
+			sb.append("call addPlayer");
+			sb.append("(");
+			sb.append(player.player_id).append(",");
+			sb.append("'"+player.player_name+"'").append(",");
+			sb.append("'"+player.height+"'").append(",");
+			sb.append(player.weight).append(",");
+			sb.append(player.team_id);
+			sb.append(");");
+			
+			PreparedStatement preparedStatement = null;
+			preparedStatement = conn.prepareStatement(sb.toString());
+			preparedStatement.executeUpdate();
+				
+			getPlayers();
+			getTeams();
 			
 		}
 		
 		// add Teams
 		
-		public void addTeams(Teams team) {
-			String sql = "insert into Teams values " + "(?, ?, ?, ?, ?); ";
-
+		public void addTeams(Teams team) throws SQLException {
+			
+			StringBuffer sb = new StringBuffer();
+			sb.append("call addTeam");
+			sb.append("(");
+			sb.append(team.team_id).append(",");
+			sb.append("'"+team.team_name+"'").append(",");
+			sb.append("'"+team.head_coach+"'").append(",");
+			sb.append(team.number_of_players).append(",");
+			sb.append(team.league_id);
+			sb.append(");");
+			
 			PreparedStatement preparedStatement = null;
-			try {
-				preparedStatement = conn.prepareStatement(sql);
-				preparedStatement.setInt(1, team.team_id);
-				preparedStatement.setString(2, team.team_name);
-				preparedStatement.setString(3, team.head_coach);
-				preparedStatement.setInt(4, team.number_of_players);
-				preparedStatement.setInt(5, team.league_id);
-				preparedStatement.executeUpdate();
+			preparedStatement = conn.prepareStatement(sb.toString());
+			preparedStatement.executeUpdate();
 				
-				// update list
-				getTeams();
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-			}
-			
-			
+			getTeams();
+			getLeagues();
 		}
 		
 		// add Leagues
 		
-		public void addLeagues(Leagues league) {
-			String sql = "insert into Leagues values " + "(?, ?, ?, ?); ";
-
-			PreparedStatement preparedStatement = null;
-			try {
-				preparedStatement = conn.prepareStatement(sql);
-				preparedStatement.setInt(1, league.league_id);
-				preparedStatement.setString(2, league.league_name);
-				preparedStatement.setString(3, league.description);
-				preparedStatement.setInt(4, league.number_of_teams);
-				preparedStatement.executeUpdate();
-				
-				// update list
+		public void addLeagues(Leagues league) throws SQLException {
 			
-				getLeagues();
-				
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-			} 
+			StringBuffer sb = new StringBuffer();
+			sb.append("call addLeague");
+			sb.append("(");
+			sb.append(league.league_id).append(",");
+			sb.append("'"+league.league_name+"'").append(",");
+			sb.append("'"+league.description+"'").append(",");
+			sb.append(league.number_of_teams);
+			sb.append(");");
+			
+			PreparedStatement preparedStatement = null;
+			preparedStatement = conn.prepareStatement(sb.toString());
+			preparedStatement.executeUpdate();
+			
+			getLeagues(); 
 			
 		}
 		
 		// update Players
 		
-		public void updatePlayers(int row, String columnName, Object data) {
+		public void updatePlayers(int row, String columnName, Object data) throws SQLException {
 		
 			Players player = list_players.get(row);
-			//String title = movie.getTitle();
-			//int year = movie.getYear();
 			
 			String sql = "update Players set " + columnName + " = ?  where player_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
-			try {
+			//try {
 				preparedStatement = conn.prepareStatement(sql);
 				if (data instanceof String)
 					preparedStatement.setString(1, (String) data);
@@ -284,23 +255,20 @@ public class RosterDB{
 				
 				// update list
 				getPlayers();
+				getTeams();
 				
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-			} 
 			
 		}
 		
 		// update Teams
-		public void updateTeams(int row, String columnName, Object data) {
+		public void updateTeams(int row, String columnName, Object data) throws SQLException {
 		
 			Teams team = list_teams.get(row);
 			
 			String sql = "update Teams set " + columnName + " = ?  where team_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
-			try {
+			//try {
 				preparedStatement = conn.prepareStatement(sql);
 				if (data instanceof String)
 					preparedStatement.setString(1, (String) data);
@@ -311,11 +279,7 @@ public class RosterDB{
 				
 				// update list
 				getTeams();
-				
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-			} 
+				getLeagues();
 			
 		}
 		

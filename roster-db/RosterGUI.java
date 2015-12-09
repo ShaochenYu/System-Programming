@@ -25,14 +25,7 @@ public class RosterGUI {
 		TabPage tp1 = new TabPage(card1, rdb, 1);
 		TabPage tp2 = new TabPage(card2, rdb, 2);
 		TabPage tp3 = new TabPage(card3, rdb, 3);
-		//createComponent(card1, 1);
-        
-		/*
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
 		
-		JPanel card3 = new JPanel();
-        */
 		tabbedPane.addTab(PLAYERPANEL, card1);
         tabbedPane.addTab(TEAMPANEL, card2);
 		tabbedPane.addTab(LEAGUEPANEL, card3);

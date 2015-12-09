@@ -15,6 +15,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import java.util.*;
+import java.sql.SQLException;
 
 public class TabPage implements ActionListener, TableModelListener {
 	
@@ -48,25 +49,25 @@ public class TabPage implements ActionListener, TableModelListener {
 		this.type = type;
 		if( type == 1 )	{
 			//list = rdb.list_players;
-			columnNames.add("player id");
-			columnNames.add("player name");
+			columnNames.add("player_id");
+			columnNames.add("player_name");
 			columnNames.add("height");
 			columnNames.add("weight");
-			columnNames.add("team id");
+			columnNames.add("team_id");
 		}else{ 
 			if (type == 2) {
-				//list = rdb.list_teams;
-				columnNames.add("team id");
-				columnNames.add("team name");
-				columnNames.add("head coach");
-				columnNames.add("# of players");
-				columnNames.add("league id");
+				
+				columnNames.add("team_id");
+				columnNames.add("team_name");
+				columnNames.add("head_coach");
+				columnNames.add("number_of_players");
+				columnNames.add("leagu_id");
 			}else{
-					//list = rdb.list_leagues;
-					columnNames.add("league id");
-					columnNames.add("league name");
+					
+					columnNames.add("league_id");
+					columnNames.add("league_name");
 					columnNames.add("description");
-					columnNames.add("# of teams");
+					columnNames.add("number_of_teams");
 			}
 		}
 		
@@ -111,7 +112,7 @@ public class TabPage implements ActionListener, TableModelListener {
 					data[i][1] = list.get(i).league_name;
 					data[i][2] = list.get(i).description;
 					data[i][3] = list.get(i).number_of_teams;
-					//data[i][4] = list.get(i).league_id;
+					
 				}
 			
 			}
@@ -188,9 +189,6 @@ public class TabPage implements ActionListener, TableModelListener {
 		//parentPanel.setLayout();
 		parentPanel.setLayout(new BoxLayout(parentPanel,BoxLayout.X_AXIS));
 		parentPanel.add(pnlButtons);
-	
-		//pnlButtons.setBounds(10,5,10,10);
-		
 		
 		//List Panel
 		pnlContent = new JPanel();
@@ -256,7 +254,7 @@ public class TabPage implements ActionListener, TableModelListener {
 			
 			pnlContent.removeAll();
 			table = new JTable(data, columnNames.toArray());
-			//table.getModel().addTableModelListener(this);
+			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
 			pnlContent.add(scrollPane);
 			pnlContent.revalidate();
@@ -278,7 +276,6 @@ public class TabPage implements ActionListener, TableModelListener {
 		} else if (e.getSource() == btnTitleSearch) {
 			String title = txfTitle.getText();
 			if (title.length() > 0) {
-				//list = rdb.getPlayers( Integer.parseInt(title) );
 				
 				setData(Integer.parseInt(title));
 				
@@ -292,9 +289,8 @@ public class TabPage implements ActionListener, TableModelListener {
 				txfTitle.setText("");
 			}
 		} else if (e.getSource() == btnAddItem) {
-			//Movie movie = new Movie(txfField[0].getText(), Integer.parseInt(txfField[1].getText())
-			//		,Integer.parseInt(txfField[2].getText()), txfField[3].getText(), txfField[4].getText() );
-			//db.addMovie(movie);
+			
+			try{
 			if( type == 1 ){
 				Players p = new Players( Integer.parseInt( txfField[0].getText() ), txfField[1].getText(), txfField[2].getText(), Integer.parseInt( txfField[3].getText() ), Integer.parseInt( txfField[4].getText() ));
 				rdb.addPlayers(p);
@@ -309,7 +305,13 @@ public class TabPage implements ActionListener, TableModelListener {
 				Leagues l = new Leagues( Integer.parseInt( txfField[0].getText() ), txfField[1].getText(), txfField[2].getText(), Integer.parseInt( txfField[3].getText() ) );
 				rdb.addLeagues(l);
 			}
+			
 			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			} catch( SQLException se){
+				se.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Operation is against DB constraints!");
+			}
+			
 			for (int i=0; i<txfField.length; i++) {
 				txfField[i].setText("");
 			}
@@ -324,13 +326,25 @@ public class TabPage implements ActionListener, TableModelListener {
         TableModel model = (TableModel)e.getSource();
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
+		try{
+		if( type == 1 ){
+				rdb.updatePlayers(row, columnName, data);
+				rdb.getPlayers();
+		}
+		if( type == 2 ){ 
+				rdb.updateTeams(row, columnName, data);
+				rdb.getTeams();
+		}
+		if( type == 3 ){
+				rdb.updateLeagues(row, columnName, data);
+				rdb.getLeagues();
+		}
+		JOptionPane.showMessageDialog(null, "Modified sucessfully!");
 		
-		if( type == 1 )	rdb.updatePlayers(row, columnName, data);
-		
-		if( type == 2 ) rdb.updateTeams(row, columnName, data);
-		
-		if( type == 3 )	rdb.updateLeagues(row, columnName, data);
-        //db.updateMovie(row, columnName, data);
+		} catch ( SQLException se ){
+			se.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Operation is against DB constraints!");
+		}
 		
 	}
 	
