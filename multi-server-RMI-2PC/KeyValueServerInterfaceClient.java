@@ -109,6 +109,35 @@ public class KeyValueServerInterfaceClient
 		return ;		
 	}
 	
-	
+	public static void doRequest(String in_data, KeyValueServerInterface server) throws RemoteException{
+		
+		
+		String type = UtilTool.checkType(in_data);
+		
+		
+		if( type == null ){	
+				loghelper.record("	[WARNING]	Invalid Operation!" );
+				return ;
+		}
+			
+		if( type.equals("GET") ){
+			
+				String res = server.read(in_data, local_ip);
+				if( res.length() == 0 )	res = "NULL";
+				
+				loghelper.record("	[MESSAGE]	Receive Data For GET Operation:	" + res + " : from:" + server.getServerName() );
+		
+		}else{	
+				// log prepare and commit info into log
+				if( type.equals("DEL") || type.equals("PUT")  ){
+					//System.out.println( server.getServerName() );
+					server.write(in_data, local_ip);
+				}else{
+					loghelper.record("	[WARNING]	Invalid Operation! : " + in_data );
+				}
+		}
+		
+		return ;
+	}
 
 }
