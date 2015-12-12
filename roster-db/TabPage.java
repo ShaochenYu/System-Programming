@@ -18,7 +18,9 @@ import java.util.*;
 import java.sql.SQLException;
 
 public class TabPage implements ActionListener, TableModelListener {
-	
+	/*
+	create tabs for players, teams, leagues	
+	*/
 	
 	private int type = 0;
 	private JPanel parentPanel;

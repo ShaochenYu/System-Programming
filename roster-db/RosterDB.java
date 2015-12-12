@@ -268,7 +268,7 @@ public class RosterDB{
 			String sql = "update Teams set " + columnName + " = ?  where team_id = ? ;";
 			System.out.println(sql);
 			PreparedStatement preparedStatement = null;
-			//try {
+			
 				preparedStatement = conn.prepareStatement(sql);
 				if (data instanceof String)
 					preparedStatement.setString(1, (String) data);
