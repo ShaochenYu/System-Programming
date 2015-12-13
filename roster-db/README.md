@@ -7,11 +7,11 @@ This application is for managing player rosters, CRUD(create, read, update and d
 
 1.1 Open Mysql
 
-1.2 Connect mysql workbench to Mysql, run sql script/roster.sql in mysql workbench
+1.2 Connect mysql workbench to Mysql, run sql roster.sql in mysql workbench
 
 2. run .jar
 
-2.1 enter the app jar/ directory
+2.1 enter the app directory
 
 2.2 enter 'java -jar roster_sys.jar' in terminal
 
