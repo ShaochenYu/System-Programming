@@ -24,6 +24,11 @@ import util.GraphLoader;
  */
 public class MapGraph {
 	//TODO: Add your member variables here in WEEK 2
+	private int[][] matrix;
+	private int numVertices;
+	private int numEdges;
+	// node list, positions correspond to indexes of matrix, 1 - 1, 2 - 2, ...
+	private List<GeographicPoint> pointList;
 	
 	
 	/** 
