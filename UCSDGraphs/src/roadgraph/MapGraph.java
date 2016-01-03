@@ -76,7 +76,26 @@ public class MapGraph {
 	public boolean addVertex(GeographicPoint location)
 	{
 		// TODO: Implement this method in WEEK 2
-		return false;
+		
+				// double the size of array when excess
+				// amortized O(1)
+		
+				if( pointList.contains(location) ) return false;
+				else{
+					if( ++numVertices > matrix.length ){
+						int[][] newMatrix = new int[matrix.length * 2][matrix.length * 2];
+				
+						for( int i = 0; i < matrix.length; i++ )
+							for( int j = 0; j < matrix[0].length; j++ ){
+								newMatrix[i][j] = matrix[i][j];
+							}
+						matrix = newMatrix;
+					}
+			
+					pointList.add(location);
+			
+					return true;
+				}
 	}
 	
 	/**
