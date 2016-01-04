@@ -119,6 +119,23 @@ public class MapGraph {
 			String roadType, double length) throws IllegalArgumentException {
 
 		//TODO: Implement this method in WEEK 2
+		//add edges onto matrix
+		
+		if( from == null || to == null || roadName == null || roadType == null || length < 0 )
+				throw new IllegalArgumentException("paramenters' list is invalid");
+		
+		int fromIndex = pointList.indexOf(from), toIndex = pointList.indexOf(to);
+		
+		if( fromIndex == -1 || toIndex == -1 )	
+				throw new IllegalArgumentException("from or to point does not exist!");
+
+		assert(fromIndex < matrix.length && toIndex < matrix.length);
+		
+		matrix[fromIndex][toIndex] += 1;
+		
+		numEdges++;
+		return ;
+		
 		
 	}
 	
