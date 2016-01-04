@@ -231,6 +231,35 @@ public class MapGraph {
 		
 		return null;
 	}
+	
+	public void search( int goal, Queue<Integer> queue, boolean[] dupMap, Consumer<GeographicPoint> nodeSearched, List<GeographicPoint> path, int[] reversedEdges){
+		// bfs
+		if( goal == -1 )	return ;
+
+		while(!queue.isEmpty()){
+			
+			int curr = queue.poll().intValue();
+			
+			GeographicPoint currNode = pointList.get(curr);
+			nodeSearched.accept(currNode);
+			
+			if( curr == goal )	return ;
+			
+			for( int i = 0; i < numVertices; i++ ){
+				
+				if( !dupMap[i] && matrix[curr][i] != 0 ){
+					
+					dupMap[i] = true;	
+					queue.offer(new Integer(i));
+					// record the source to target node
+					reversedEdges[i] = curr;
+				}
+			}
+		}
+		
+		return ;
+
+	}
 
 	/** Find the path from start to goal using A-Star search
 	 * 
