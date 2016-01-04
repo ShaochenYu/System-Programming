@@ -202,6 +202,32 @@ public class MapGraph {
 
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
+
+		List<GeographicPoint> path = new ArrayList<GeographicPoint>();
+		
+		int startIndex = pointList.indexOf(start), goalIndex = pointList.indexOf(goal);
+		
+		if( startIndex == -1 || goalIndex == -1 )	return path;
+		
+		Queue<Integer> queue = new LinkedList<Integer>();
+		
+		boolean[] dupMap = new boolean[numVertices];
+		
+		// offer the source node
+		queue.offer(new Integer(startIndex));
+		dupMap[0] = true;
+		
+		// record the source (parent) to the target node, ex, [1] = 3, means 3(source) - > 1(target) 
+		int[] reversedEdges = new int[numVertices];
+		
+		for(int i = 0; i< numVertices; i++)
+			reversedEdges[i] = -1;
+		
+		search( goalIndex, queue, dupMap, nodeSearched, path, reversedEdges);
+		
+		boolean result = recordResult( startIndex, goalIndex, reversedEdges, path);
+		
+		if( result )	return path;
 		
 		return null;
 	}
