@@ -1,4 +1,4 @@
-      .data
+.data
 U_alphabet: .asciiz "Alpha ","Bravo ","Charlie ","Delta ","Echo ","Foxtrot ","Golf ","Hotel ","India ","Juliet ","Kilo ","Lima ","Mike ","November ","Oscar ","Papa ","Quebec ","Romeo ","Sierra ","Tango ","Uniform ","Victor ","Whisky ","X-ray ","Yankee ","Zulu "
 
 U_al_offset: .word 0,7,14,23,30,36,45,51,58,65,73,79,85,91,101,108,114,122,129,137,144,153,161,169,176,184
@@ -11,9 +11,9 @@ L_al_offset: .word 0,7,14,23,30,36,45,51,58,65,73,79,85,91,101,108,114,122,129,1
 number: .asciiz "Zero ", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ","Eight ","Nine "
 n_offset: .word 0,6,11,16,23,29,35,40,47,54 
 
-      .text
-      .globl main
-      #? word length[] = 4
+.text
+.globl main
+# word length[] = 4
 main: li $v0, 12
  syscall
  sub $t1, $v0, 63 # is '?" ?
